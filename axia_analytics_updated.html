@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AxiaAnalytics - AI & Data Analytics Solutions in Nairobi</title>
+    <meta name="description" content="Transform your business with AI and data analytics. Expert consultation, machine learning, and data engineering services in Nairobi, Kenya.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Design System - HSL Colors */
+        :root {
+            --primary: 211 100% 9%;
+            --primary-foreground: 210 40% 98%;
+            --primary-hover: 211 76% 22%;
+            --accent: 48 100% 50%;
+            --accent-foreground: 211 100% 9%;
+            --background: 0 0% 100%;
+            --foreground: 211 100% 9%;
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --border: 214.3 31.8% 91.4%;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Gradient backgrounds */
+        .gradient-navy {
+            background: linear-gradient(135deg, hsl(211, 100%, 9%) 0%, hsl(211, 76%, 22%) 100%);
+        }
+        
+        .gradient-gold {
+            background: linear-gradient(135deg, hsl(48, 100%, 50%) 0%, hsl(45, 100%, 45%) 100%);
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Page Navigation */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Industry Toggle Styles */
+        .industry-toggle {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .industry-toggle:hover {
+            background-color: hsl(var(--muted));
+        }
+        
+        .industry-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .industry-content.active {
+            max-height: 600px;
+        }
+        
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-icon.active {
+            transform: rotate(180deg);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(var(--primary-hover));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-accent {
+            background-color: hsl(var(--accent));
+            color: hsl(var(--accent-foreground));
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-accent:hover {
+            background-color: hsl(45, 100%, 45%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid hsl(var(--primary-foreground));
+            color: hsl(var(--primary-foreground));
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background-color: hsl(var(--primary-foreground));
+            color: hsl(var(--primary));
+        }
+
+        /* Card Hover Effects */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Active Nav Link */
+        .nav-link.active {
+            color: hsl(var(--primary));
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- HEADER -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <button onclick="showPage('home')" class="flex items-center gap-2 cursor-pointer">
+                    <div class="gradient-navy w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold">
+                        A
+                    </div>
+                    <span class="text-2xl font-bold" style="color: hsl(var(--foreground))">AxiaAnalytics</span>
+                </button>
+                
+                <nav class="hidden md:flex items-center gap-6">
+                    <button onclick="showPage('home')" data-page="home" class="nav-link font-semibold transition-colors" style="color: hsl(var(--muted-foreground))">Home</button>
+                    <button onclick="showPage('about')" data-page="about" class="nav-link font-semibold transition-colors" style="color: hsl(var(--muted-foreground))">About</button>
+                    <button onclick="showPage('services')" data-page="services" class="nav-link font-semibold transition-colors" style="color: hsl(var(--muted-foreground))">Services</button>
+                    <button onclick="showPage('blog')" data-page="blog" class="nav-link font-semibold transition-colors" style="color: hsl(var(--muted-foreground))">Blog</button>
+                    <button onclick="showPage('contact')" data-page="contact" class="nav-link font-semibold transition-colors" style="color: hsl(var(--muted-foreground))">Contact</button>
+                    <button onclick="showPage('contact')" class="btn-primary">Get Started</button>
+                </nav>
+
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-2xl">☰</button>
+            </div>
+
+            <nav id="mobile-menu" style="display: none;" class="md:hidden mt-4 pb-4 space-y-2">
+                <button onclick="showPage('home'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">Home</button>
+                <button onclick="showPage('about'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">About</button>
+                <button onclick="showPage('services'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">Services</button>
+                <button onclick="showPage('blog'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">Blog</button>
+                <button onclick="showPage('contact'); toggleMobileMenu()" class="block w-full text-left px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">Contact</button>
+                <button onclick="showPage('contact'); toggleMobileMenu()" class="btn-primary w-full">Get Started</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page active">
+        <!-- Hero Section -->
+        <section class="gradient-navy text-white py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in">
+                        <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">Transform Your Business with Data & AI</h1>
+                        <p class="text-xl mb-8 opacity-90">AxiaAnalytics delivers cutting-edge AI solutions and data analytics services that drive real business results in Nairobi and beyond.</p>
+                        <div class="flex gap-4 flex-wrap">
+                            <button onclick="showPage('contact')" class="btn-accent">Get Started</button>
+                            <button onclick="showPage('services')" class="btn-outline">Our Services</button>
+                        </div>
+                    </div>
+                    <div class="hidden md:block fade-in">
+                        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+                            <div class="grid grid-cols-2 gap-6 text-center">
+                                <div>
+                                    <div class="text-4xl font-bold mb-2" style="color: hsl(var(--accent))">100+</div>
+                                    <div class="text-sm opacity-80">Projects Completed</div>
+                                </div>
+                                <div>
+                                    <div class="text-4xl font-bold mb-2" style="color: hsl(var(--accent))">50+</div>
+                                    <div class="text-sm opacity-80">Happy Clients</div>
+                                </div>
+                                <div>
+                                    <div class="text-4xl font-bold mb-2" style="color: hsl(var(--accent))">95%</div>
+                                    <div class="text-sm opacity-80">Success Rate</div>
+                                </div>
+                                <div>
+                                    <div class="text-4xl font-bold mb-2" style="color: hsl(var(--accent))">24/7</div>
+                                    <div class="text-sm opacity-80">Support</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="py-20 px-4" style="background-color: hsl(var(--muted))">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: hsl(var(--foreground))">Our Core Services</h2>
+                    <p class="text-xl max-w-2xl mx-auto" style="color: hsl(var(--muted-foreground))">Comprehensive AI and data solutions designed to accelerate your digital transformation journey</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">👥</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Expert Consultation</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Strategic guidance, roadmapping, and feasibility studies from industry-leading AI veterans.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">🤖</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Optimized Solutions</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Development and deployment of custom AI agents and intelligent workflow automation systems.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">💡</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Strategy Development</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Creating a clear, business-aligned strategy for AI adoption and value realization.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">🛠️</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Implementation Support</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Hands-on technical assistance for seamless integration of AI models.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">🧠</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">AI & Predictive Modeling</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Custom ML models and predictive analytics for forecasting.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">📊</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">Data Engineering & Strategy</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Build robust data pipelines and scalable cloud architecture.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">📈</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">Business Intelligence & Viz</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Interactive dashboards and real-time analytics.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">⚖️</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Ethics & Governance</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Developing policies and frameworks for fair, transparent AI.</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="text-4xl mb-4" style="color: hsl(var(--accent))">☁️</div>
+                        <h3 class="text-xl font-bold mb-3" style="color: hsl(var(--foreground))">Cloud Data Migration</h3>
+                        <p class="mb-4" style="color: hsl(var(--muted-foreground))">Seamlessly moving your data to the cloud (AWS, Azure, GCP).</p>
+                        <button onclick="showPage('services')" class="font-semibold" style="color: hsl(var(--primary))">Learn More →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Industries Section -->
+        <section class="py-20 px-4 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-12" style="color: hsl(var(--foreground))">Industries We Transform</h2>
+                <div class="space-y-4">
+                    
+                    <!-- Finance & Banking -->
+                    <div class="border rounded-lg overflow-hidden" style="border-color: hsl(var(--border))">
+                        <div class="industry-toggle flex items-center justify-between p-6" style="background-color: hsl(var(--muted))" onclick="toggleIndustry('finance')">
+                            <div class="flex items-center gap-4">
+                                <div class="text-3xl" style="color: hsl(var(--accent))">🏛️</div>
+                                <h3 class="font-bold text-xl" style="color: hsl(var(--primary))">Finance & Banking</h3>
+                            </div>
+                            <svg id="icon-finance" class="rotate-icon w-6 h-6" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div id="content-finance" class="industry-content bg-white p-6 border-t" style="border-color: hsl(var(--border))">
+                            <ul class="space-y-3" style="color: hsl(var(--foreground))">
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Fraud Detection:</strong> Deploying real-time anomaly detection models to minimize financial risk.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Credit Scoring:</strong> Developing advanced, non-traditional scoring models for better lending decisions.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Regulatory Reporting:</strong> Automating compliance and regulatory report generation using AI.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Personalized Banking:</strong> Utilizing customer data to offer hyper-personalized investment and product advice.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Healthcare -->
+                    <div class="border rounded-lg overflow-hidden" style="border-color: hsl(var(--border))">
+                        <div class="industry-toggle flex items-center justify-between p-6" style="background-color: hsl(var(--muted))" onclick="toggleIndustry('healthcare')">
+                            <div class="flex items-center gap-4">
+                                <div class="text-3xl" style="color: hsl(var(--accent))">🏥</div>
+                                <h3 class="font-bold text-xl" style="color: hsl(var(--primary))">Healthcare</h3>
+                            </div>
+                            <svg id="icon-healthcare" class="rotate-icon w-6 h-6" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div id="content-healthcare" class="industry-content bg-white p-6 border-t" style="border-color: hsl(var(--border))">
+                            <ul class="space-y-3" style="color: hsl(var(--foreground))">
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Predictive Diagnostics:</strong> Building models to forecast patient outcomes and disease progression.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Resource Optimization:</strong> AI-driven scheduling for hospital staff and equipment utilization.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Patient Data Analysis:</strong> Securely analyzing clinical data for research and operational efficiency.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Telemedicine Integration:</strong> Developing intelligent systems to enhance remote patient monitoring and care.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Logistics -->
+                    <div class="border rounded-lg overflow-hidden" style="border-color: hsl(var(--border))">
+                        <div class="industry-toggle flex items-center justify-between p-6" style="background-color: hsl(var(--muted))" onclick="toggleIndustry('logistics')">
+                            <div class="flex items-center gap-4">
+                                <div class="text-3xl" style="color: hsl(var(--accent))">🚛</div>
+                                <h3 class="font-bold text-xl" style="color: hsl(var(--primary))">Logistics & Supply Chain</h3>
+                            </div>
+                            <svg id="icon-logistics" class="rotate-icon w-6 h-6" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div id="content-logistics" class="industry-content bg-white p-6 border-t" style="border-color: hsl(var(--border))">
+                            <ul class="space-y-3" style="color: hsl(var(--foreground))">
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Route Optimization:</strong> Dynamic route planning using real-time traffic data to cut costs.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Inventory Forecasting:</strong> Predictive modeling to optimize stock levels.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Demand Sensing:</strong> Utilizing external factors to accurately forecast product demand.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Autonomous Operations:</strong> Implementing AI for automated warehouse management.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Manufacturing -->
+                    <div class="border rounded-lg overflow-hidden" style="border-color: hsl(var(--border))">
+                        <div class="industry-toggle flex items-center justify-between p-6" style="background-color: hsl(var(--muted))" onclick="toggleIndustry('manufacturing')">
+                            <div class="flex items-center gap-4">
+                                <div class="text-3xl" style="color: hsl(var(--accent))">🏭</div>
+                                <h3 class="font-bold text-xl" style="color: hsl(var(--primary))">Manufacturing</h3>
+                            </div>
+                            <svg id="icon-manufacturing" class="rotate-icon w-6 h-6" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div id="content-manufacturing" class="industry-content bg-white p-6 border-t" style="border-color: hsl(var(--border))">
+                            <ul class="space-y-3" style="color: hsl(var(--foreground))">
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Predictive Maintenance:</strong> Using sensor data to anticipate equipment failures.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Quality Control:</strong> Computer Vision AI for automated defect detection.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Production Scheduling:</strong> Optimizing manufacturing schedules to maximize throughput.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Energy Optimization:</strong> AI systems that reduce energy consumption.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- E-Commerce -->
+                    <div class="border rounded-lg overflow-hidden" style="border-color: hsl(var(--border))">
+                        <div class="industry-toggle flex items-center justify-between p-6" style="background-color: hsl(var(--muted))" onclick="toggleIndustry('ecommerce')">
+                            <div class="flex items-center gap-4">
+                                <div class="text-3xl" style="color: hsl(var(--accent))">🛒</div>
+                                <h3 class="font-bold text-xl" style="color: hsl(var(--primary))">E-Commerce & Retail</h3>
+                            </div>
+                            <svg id="icon-ecommerce" class="rotate-icon w-6 h-6" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div id="content-ecommerce" class="industry-content bg-white p-6 border-t" style="border-color: hsl(var(--border))">
+                            <ul class="space-y-3" style="color: hsl(var(--foreground))">
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Personalized Recommendations:</strong> Building AI engines that drive sales through targeted product suggestions.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Customer Segmentation:</strong> Using clustering techniques to better understand buying behavior.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Dynamic Pricing:</strong> Implementing algorithms that adjust prices in real-time.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Churn Prediction:</strong> Identifying customers likely to leave and automating retention campaigns.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Energy -->
+                    <div class="border rounded-lg overflow-hidden" style="border-color: hsl(var(--border))">
+                        <div class="industry-toggle flex items-center justify-between p-6" style="background-color: hsl(var(--muted))" onclick="toggleIndustry('energy')">
+                            <div class="flex items-center gap-4">
+                                <div class="text-3xl" style="color: hsl(var(--accent))">🔌</div>
+                                <h3 class="font-bold text-xl" style="color: hsl(var(--primary))">Energy & Utilities</h3>
+                            </div>
+                            <svg id="icon-energy" class="rotate-icon w-6 h-6" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                        <div id="content-energy" class="industry-content bg-white p-6 border-t" style="border-color: hsl(var(--border))">
+                            <ul class="space-y-3" style="color: hsl(var(--foreground))">
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Grid Load Forecasting:</strong> Predicting energy consumption to optimize power generation.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Asset Management:</strong> Using AI to monitor the health of remote assets.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Smart Meter Data Analysis:</strong> Processing large volumes of usage data for billing accuracy.</span></li>
+                                <li class="flex items-start"><span class="mr-3 font-bold" style="color: hsl(var(--accent))">•</span><span><strong>Renewable Energy Integration:</strong> Optimizing intermittent power flow from solar and wind resources.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-20 px-4 gradient-navy text-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-12" style="color: hsl(var(--accent))">Hear From Our Clients</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 card-hover">
+                        <blockquote class="text-lg italic mb-4">"AxiaAnalytics helped us streamline our material procurement process with predictive analytics. We saw a 25% efficiency gain in our supply chain."</blockquote>
+                        <p class="font-bold">- Struchem Africa Ltd</p>
+                        <p class="text-sm opacity-80">Construction</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 card-hover">
+                        <blockquote class="text-lg italic mb-4">"Their work on customer sentiment analysis transformed how we approach client feedback. We're now making data-driven decisions on service improvements."</blockquote>
+                        <p class="font-bold">- Wishconsultancy</p>
+                        <p class="text-sm opacity-80">Consumer Service</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 card-hover">
+                        <blockquote class="text-lg italic mb-4">"We leveraged their data engineering expertise to build a real-time monitoring dashboard for our retail sites. This has been crucial for optimizing fuel distribution."</blockquote>
+                        <p class="font-bold">- Vivo Energy Kenya</p>
+                        <p class="text-sm opacity-80">Fuel Retail</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 card-hover">
+                        <blockquote class="text-lg italic mb-4">"Implementing their solution for warehouse inventory tracking was seamless. It has drastically cut down on manual errors and improved our overall stock accuracy."</blockquote>
+                        <p class="font-bold">- KINSON LIMITED</p>
+                        <p class="text-sm opacity-80">Flooring</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 card-hover">
+                        <blockquote class="text-lg italic mb-4">"As an NGO, optimizing resource allocation is key. AxiaAnalytics provided a model that helps us forecast community needs, ensuring our aid reaches the right people."</blockquote>
+                        <p class="font-bold">- Fadhila Kenya</p>
+                        <p class="text-sm opacity-80">NGO</p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 card-hover">
+                        <blockquote class="text-lg italic mb-4">"Their business intelligence dashboards gave us clarity into our sales channels for the first time. We can now identify high-performing products and target our marketing effectively."</blockquote>
+                        <p class="font-bold">- MSENGWEDU ENTERPRISES</p>
+                        <p class="text-sm opacity-80">General Merchant</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Studies Section -->
+        <section class="py-20 px-4 bg-white">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+                <div class="gradient-navy rounded-2xl p-8 text-white card-hover">
+                    <div class="text-sm font-semibold mb-2" style="color: hsl(var(--accent))">CASE STUDY 1</div>
+                    <h2 class="text-xl font-bold mb-4">80% Reduction in Manual Processing</h2>
+                    <p class="text-sm mb-6 opacity-90">Implemented a predictive model that reduced credit default risk by 15% for a micro-finance institution.</p>
+                    <button onclick="showPage('blog')" class="btn-accent">Read Full Story</button>
+                </div>
+
+                <div class="gradient-navy rounded-2xl p-8 text-white card-hover">
+                    <div class="text-sm font-semibold mb-2" style="color: hsl(var(--accent))">CASE STUDY 2</div>
+                    <h2 class="text-xl font-bold mb-4">Logistics Automation Success</h2>
+                    <p class="text-sm mb-6 opacity-90">We helped a leading Kenyan logistics company automate operations, saving 200+ hours per month.</p>
+                    <button onclick="showPage('blog')" class="btn-accent">Read Full Story</button>
+                </div>
+
+                <div class="gradient-navy rounded-2xl p-8 text-white card-hover">
+                    <div class="text-sm font-semibold mb-2" style="color: hsl(var(--accent))">CASE STUDY 3</div>
+                    <h2 class="text-xl font-bold mb-4">Supply Chain Optimization</h2>
+                    <p class="text-sm mb-6 opacity-90">Designed a demand forecasting engine that led to a 30% reduction in stockouts for a major retailer.</p>
+                    <button onclick="showPage('blog')" class="btn-accent">Read Full Story</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 px-4" style="background-color: hsl(var(--muted))">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6" style="color: hsl(var(--foreground))">Ready to Transform Your Business?</h2>
+                <p class="text-xl mb-8" style="color: hsl(var(--muted-foreground))">Let's discuss how AI and data analytics can drive your next breakthrough</p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <button onclick="showPage('contact')" class="btn-primary">Schedule Consultation</button>
+                    <button onclick="showPage('contact')" class="border-2 px-8 py-3 rounded-lg font-semibold transition hover:bg-gray-100" style="border-color: hsl(var(--primary)); color: hsl(var(--primary))">Contact Us</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="page-about" class="page">
+        <div class="py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-bold mb-8" style="color: hsl(var(--foreground))">About AxiaAnalytics</h1>
+                <div class="grid md:grid-cols-2 gap-12 mb-20">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6" style="color: hsl(var(--primary))">Our Story</h2>
+                        <p class="text-lg mb-4" style="color: hsl(var(--foreground))">AxiaAnalytics was founded with a vision to democratize AI and data analytics for businesses across Africa. Based in Nairobi, Kenya, we recognized the transformative power of data-driven decision making.</p>
+                        <p class="text-lg" style="color: hsl(var(--foreground))">Today, we're at the forefront of Africa's AI revolution, helping businesses leverage cutting-edge technology to achieve unprecedented growth and efficiency.</p>
+                    </div>
+                    <div class="gradient-navy rounded-2xl p-8 text-white">
+                        <h3 class="text-2xl font-bold mb-6">By The Numbers</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="text-4xl font-bold mb-2" style="color: hsl(var(--accent))">100+</div>
+                                <div class="opacity-80">Projects Completed</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-bold mb-2" style="color: hsl(var(--accent))">50+</div>
+                                <div class="opacity-80">Enterprise Clients</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-bold mb-2" style="color: hsl(var(--accent))">95%</div>
+                                <div class="opacity-80">Client Satisfaction</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SERVICES PAGE -->
+    <div id="page-services" class="page">
+        <div class="py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-center" style="color: hsl(var(--foreground))">Our Services</h1>
+                <p class="text-xl text-center mb-16 max-w-3xl mx-auto" style="color: hsl(var(--muted-foreground))">Comprehensive AI and data solutions designed to accelerate your digital transformation</p>
+
+                <div class="space-y-8">
+                    <div class="rounded-2xl p-10 card-hover" style="background: linear-gradient(135deg, hsl(210, 40%, 98%) 0%, hsl(48, 100%, 95%) 100%)">
+                        <div class="flex items-start gap-6 mb-6">
+                            <div class="text-4xl" style="color: hsl(var(--accent))">👥</div>
+                            <div>
+                                <h2 class="text-3xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Expert Consultation</h2>
+                                <p class="text-lg" style="color: hsl(var(--muted-foreground))">Strategic guidance and roadmapping from industry-leading AI veterans to help you navigate the complex landscape of artificial intelligence.</p>
+                            </div>
+                        </div>
+                        <button onclick="showPage('contact')" class="btn-primary">Request Consultation</button>
+                    </div>
+                    
+                    <div class="rounded-2xl p-10 card-hover" style="background: linear-gradient(135deg, hsl(48, 100%, 95%) 0%, hsl(340, 100%, 98%) 100%)">
+                        <div class="flex items-start gap-6 mb-6">
+                            <div class="text-4xl" style="color: hsl(var(--accent))">🤖</div>
+                            <div>
+                                <h2 class="text-3xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Optimized Solutions</h2>
+                                <p class="text-lg" style="color: hsl(var(--muted-foreground))">Custom AI agents and intelligent workflow automation systems tailored to your business needs.</p>
+                            </div>
+                        </div>
+                        <button onclick="showPage('contact')" class="btn-accent">Request Consultation</button>
+                    </div>
+
+                    <div class="rounded-2xl p-10 card-hover" style="background: linear-gradient(135deg, hsl(340, 100%, 98%) 0%, hsl(210, 40%, 98%) 100%)">
+                        <div class="flex items-start gap-6 mb-6">
+                            <div class="text-4xl" style="color: hsl(var(--accent))">💡</div>
+                            <div>
+                                <h2 class="text-3xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Strategy Development</h2>
+                                <p class="text-lg" style="color: hsl(var(--muted-foreground))">Creating a clear, business-aligned strategy for AI adoption that ensures maximum ROI and sustainable value realization.</p>
+                            </div>
+                        </div>
+                        <button onclick="showPage('contact')" class="btn-primary">Request Consultation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOG PAGE -->
+    <div id="page-blog" class="page">
+        <div class="py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-center" style="color: hsl(var(--foreground))">Blog & Insights</h1>
+                <p class="text-xl text-center mb-16 max-w-3xl mx-auto" style="color: hsl(var(--muted-foreground))">Stay updated with the latest AI and data analytics trends</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                        <div class="h-48 gradient-navy"></div>
+                        <div class="p-6">
+                            <h2 class="text-2xl font-bold mb-3" style="color: hsl(var(--foreground))">The Rise of AI Agents</h2>
+                            <p class="mb-4" style="color: hsl(var(--muted-foreground))">Discover how autonomous AI agents are transforming business operations and driving efficiency.</p>
+                            <button class="font-semibold" style="color: hsl(var(--primary))">Read More →</button>
+                        </div>
+                    </article>
+                    <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                        <div class="h-48 gradient-gold"></div>
+                        <div class="p-6">
+                            <h2 class="text-2xl font-bold mb-3" style="color: hsl(var(--foreground))">Data Analytics Best Practices</h2>
+                            <p class="mb-4" style="color: hsl(var(--muted-foreground))">Learn essential strategies for implementing effective data analytics in your organization.</p>
+                            <button class="font-semibold" style="color: hsl(var(--primary))">Read More →</button>
+                        </div>
+                    </article>
+                    <article class="bg-white rounded-xl shadow-sm overflow-hidden card-hover">
+                        <div class="h-48 gradient-navy"></div>
+                        <div class="p-6">
+                            <h2 class="text-2xl font-bold mb-3" style="color: hsl(var(--foreground))">AI Ethics in Practice</h2>
+                            <p class="mb-4" style="color: hsl(var(--muted-foreground))">Exploring the importance of ethical AI development and implementation frameworks.</p>
+                            <button class="font-semibold" style="color: hsl(var(--primary))">Read More →</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="page-contact" class="page">
+        <div class="py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-center" style="color: hsl(var(--foreground))">Get In Touch</h1>
+                <p class="text-xl text-center mb-16 max-w-3xl mx-auto" style="color: hsl(var(--muted-foreground))">Ready to transform your business with AI? Let's talk about your project.</p>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2" style="color: hsl(var(--foreground))">Name *</label>
+                                <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2" style="border-color: hsl(var(--border)); background-color: hsl(var(--background))">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2" style="color: hsl(var(--foreground))">Email *</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2" style="border-color: hsl(var(--border)); background-color: hsl(var(--background))">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2" style="color: hsl(var(--foreground))">Message *</label>
+                                <textarea name="message" required rows="5" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2" style="border-color: hsl(var(--border)); background-color: hsl(var(--background))"></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary w-full">Send Message</button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <div class="gradient-navy rounded-2xl p-8 text-white h-full">
+                            <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="font-semibold mb-1">Location</div>
+                                    <div class="opacity-80">Nairobi, Kenya</div>
+                                </div>
+                                <div>
+                                    <div class="font-semibold mb-1">Phone</div>
+                                    <a href="tel:+254728702495" class="opacity-80 hover:opacity-100 transition">+254 728 702 495</a>
+                                </div>
+                                <div>
+                                    <div class="font-semibold mb-1">Email</div>
+                                    <a href="mailto:Axiaanalyticsglobal@gmail.com" class="opacity-80 hover:opacity-100 transition">Axiaanalyticsglobal@gmail.com</a>
+                                </div>
+                                <div>
+                                    <div class="font-semibold mb-3">Follow Us</div>
+                                    <div class="flex gap-3">
+                                        <a href="https://instagram.com/AxiaAnalytics" target="_blank" class="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30 transition">Instagram</a>
+                                        <a href="https://linkedin.com/company/AxiaAnalytics" target="_blank" class="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30 transition">LinkedIn</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="py-12 px-4" style="background-color: hsl(211, 100%, 9%); color: white">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">AxiaAnalytics</h3>
+                    <p class="mb-4 opacity-70">Transforming businesses with AI and data analytics solutions.</p>
+                    <div class="flex gap-3">
+                        <a href="https://instagram.com/AxiaAnalytics" target="_blank" class="bg-white/10 px-3 py-2 rounded-lg hover:bg-white/20 transition">Instagram</a>
+                        <a href="https://linkedin.com/company/AxiaAnalytics" target="_blank" class="bg-white/10 px-3 py-2 rounded-lg hover:bg-white/20 transition">LinkedIn</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Services</h4>
+                    <ul class="space-y-2 opacity-70">
+                        <li><button onclick="showPage('services')" class="hover:opacity-100 transition text-left">AI Consultation</button></li>
+                        <li><button onclick="showPage('services')" class="hover:opacity-100 transition text-left">AI Solutions</button></li>
+                        <li><button onclick="showPage('services')" class="hover:opacity-100 transition text-left">Data Engineering</button></li>
+                        <li><button onclick="showPage('services')" class="hover:opacity-100 transition text-left">Business Intelligence</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 opacity-70">
+                        <li><button onclick="showPage('home')" class="hover:opacity-100 transition text-left">Home</button></li>
+                        <li><button onclick="showPage('about')" class="hover:opacity-100 transition text-left">About Us</button></li>
+                        <li><button onclick="showPage('blog')" class="hover:opacity-100 transition text-left">Blog</button></li>
+                        <li><button onclick="showPage('contact')" class="hover:opacity-100 transition text-left">Contact</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2 opacity-70">
+                        <li>Nairobi, Kenya</li>
+                        <li><a href="tel:+254728702495" class="hover:opacity-100 transition">+254 728 702 495</a></li>
+                        <li><a href="mailto:Axiaanalyticsglobal@gmail.com" class="hover:opacity-100 transition">Axiaanalyticsglobal@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t pt-8 text-center opacity-70" style="border-color: rgba(255, 255, 255, 0.1)">
+                <p>&copy; 2025 AxiaAnalytics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show target page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+        }
+
+        // Industry Toggle
+        function toggleIndustry(industryId) {
+            const content = document.getElementById('content-' + industryId);
+            const icon = document.getElementById('icon-' + industryId);
+            
+            const isActive = content.classList.contains('active');
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        // Contact Form
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will contact you within 24 hours.');
+                this.reset();
+            });
+        }
+
+        // Initialize - Show home page and set active nav
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
